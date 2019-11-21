@@ -31,6 +31,20 @@ if (wlhs[4] != 'ChangePassword') {
     }
 }
 
+function renameElement($element, newElement) {
+
+    $element.wrap("<" + newElement + ">");
+    $newElement = $element.parent();
+
+    //Copying Attributes
+    $.each($element.prop('attributes'), function () {
+        $newElement.attr(this.name, this.value);
+    });
+
+    $element.contents().unwrap();
+
+    return $newElement;
+}
 
 function JsonMessagesBell() {
 
@@ -438,7 +452,7 @@ if ($('table').length > 0) {
         }
     });
 
-    if (wlhs[3] == "ModeAdmin" || wlhs[3] == "OutlaysAdmin") {
+    if (wlhs[3].replace('#', '') == "ModeAdmin" || wlhs[3].replace('#', '') == "OutlaysAdmin") {
 
         $('table thead tr').clone(true).appendTo('table thead');
 
@@ -469,6 +483,9 @@ if ($('table').length > 0) {
         $('.buttons-excel').attr('title', 'Baixar excel');
         $('.buttons-pdf').attr('title', 'Baixar PDF');
         $('.buttons-print').attr('title', 'Imprimir');
+
+        renameElement($('table thead tr:eq(1) th'), 'td');
+        $('table thead tr:eq(1) td th').remove()
     }
 
     $('input[type="search"]').addClass('form-control');
