@@ -150,12 +150,13 @@ function OutlaysSubmit() {
         $('#Outlays_NoteValue').focus();
         return false;
     }
-
+    /*
     if ($('#Document').val().length == 0 && wlhs[4] != 'Edit') {
         $('#outlays_file').show();
         $('#Document').focus();
         return false;
     }
+    */
 
     if ($('#Outlays_Description').val().length == 0) {
         $('#outlays_description').show();
@@ -164,7 +165,7 @@ function OutlaysSubmit() {
     }
 
     $('#Outlays_File').val() == "" ? $('#Outlays_File').val('Sem Document') : '';
-
+    /*
     if ($('#Document').val().length > 0) {
         let document = $('#Document').prop("files")[0]
 
@@ -190,7 +191,7 @@ function OutlaysSubmit() {
         value = document.name.replace(/[ |&|$|#|@|%|*]/g, '');
         $('#Outlays_File').val(value);
     }
-    
+    */
     let noteValue = $('#Outlays_NoteValue').val().replace(/[,|.]/g, '');
     $('#Outlays_NoteValue').val(noteValue);
 
