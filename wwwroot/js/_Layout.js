@@ -273,7 +273,7 @@ if ($('table').length > 0) {
                     (Wlhs == "ModeAdmin" && (id == 2 || id == 4 || id == 5 || id == 6)) ||
                     (Wlhs == "OutlaysAdmin" && (id == 1 || id == 2 || id == 3 || id == 4)) ||
                     (Wlhs == "Reports" && lastWlhs == "ModeAdmin" && (id == 0 || id == 2 || id == 3 || id == 4)) ||
-                    (Wlhs == "Reports" && lastWlhs == "OutlaysAdmin" && (id == 1 || id == 2 || id == 3 || id == 4)) ) {
+                    (Wlhs == "Reports" && lastWlhs == "OutlaysAdmin" && (id == 1 || id == 2 || id == 3 || id == 4))) {
                     var select = $(`<select class="form-control ${Wlhs == "ModeAdmin" ? nameClass(id) : ''}" id="${Wlhs == "ModeAdmin" ? nameClass(id) : ''}"><option value=""> ${Wlhs == "ModeAdmin" ? NameSelect(id) : 'Selecione'}</option></select>`)
                         .appendTo($(column.header()).empty())
                         .on('change', function () {
@@ -285,6 +285,7 @@ if ($('table').length > 0) {
                                 .search(val ? '^' + val + '$' : '', true, false)
                                 .draw();
                             lastWlhs == "ModeAdmin" ? SumTotalHours() : '';
+                            lastWlhs == "ModeAdmin" ? $('table tfoot tr td:eq(11)').text($('#TotalOfSumHours').val()) : '';
                         });
 
 
@@ -345,7 +346,7 @@ if ($('table').length > 0) {
             }
         } else if (Wlhs == "OutlaysAdmin" || (Wlhs == "Reports" && lastWlhs == "OutlaysAdmin")) {
             for (var i = 0; i <= 10; i++) {
-                if (i >= 4) {
+                if (i > 4) {
                     $('table thead tr:eq(1) th')[i].innerHTML = '';
                 }
 
@@ -416,15 +417,18 @@ if ($('table').length > 0) {
                         });
                     }
 
-                    docContentSplice(3, 0, 0, 30, 0, 0, 'left', 200, 100, '______________________________');
-                    docContentSplice(4, 0, 0, 3, 0, 0, 'left', 200, 100, 'Assinatura Gestor Jump Label');
-                    docContentSplice(5, 0, 0, 3, 0, 0, 'left', 200, 100, 'Nome:');
-                    docContentSplice(6, 0, 0, 3, 0, 0, 'left', 200, 100, 'CPF:');
 
+                    docContentSplice(3, 0, 0, 50, 0, 0, 'left', 200, 100, '______________________________                                                                                          ______________________________');
+                    docContentSplice(4, 0, 0, 3, 0, 0, 'left', 200, 100, 'Assinatura Gestor Jump Label                                                                                           Assinatura Consultor');
+                    docContentSplice(5, 0, 0, 3, 0, 0, 'left', 200, 100, 'Nome:                                                                                                                                     Nome:');
+                    docContentSplice(6, 0, 0, 3, 0, 0, 'left', 200, 100, 'CPF:                                                                                                                                        CPF:');
+
+                    /*
                     docContentSplice(7, 0, 0, 30, 0, 0, 'left', 200, 100, '______________________________');
                     docContentSplice(8, 0, 0, 3, 0, 0, 'left', 200, 100, 'Assinatura Consultor');
                     docContentSplice(9, 0, 0, 3, 0, 0, 'left', 200, 100, 'Nome:');
                     docContentSplice(10, 0, 0, 3, 0, 0, 'left', 200, 100, 'CPF:');
+                    */
                 },
 
                 exportOptions: {
@@ -445,13 +449,44 @@ if ($('table').length > 0) {
                     var wlo = window.location.origin;
                     $(win.document.body)
                         .css('font-size', '10pt')
-                        .prepend(
-                            '<img src="' + wlo + '/images/brand/logo---fundo-transp.png" style="position:absolute; top:-100px; left:0;" />'
-                        );
+                        .prepend(`
+                                <div class="row">
+                                    <div class="col-6">
+                                        <img src="${wlo}/images/brand/logo---fundo-transp.png" style="width: 450px; height: 234px;"  />
+                                    </div>
+                                </div>
+                        `);
 
                     $(win.document.body).find('table')
                         .addClass('compact')
-                        .css('font-size', 'inherit');
+                        .css({ 'font-size': 'inherit'});
+
+                    $(win.document.body).append(`
+                    <div class="container" style="margin-top: 5%">
+                        <div class="row">
+                            <div class="col-6 text-left">
+                                <span>______________________________</span>
+                            </div>
+                            <div class="col-6 text-ridht">
+                                <span>______________________________</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="row col-2">Assinatura</div>
+                                <div class="row col-2">CPF:</div>
+                                <div class="row col-2">Nome</div>
+                            </div>
+                            <div class="col-6">
+                                <div class="row col-2">Assinatura</div>
+                                <div class="row col-2">CPF:</div>
+                                <div class="row col-2">Nome</div>
+                            </div>
+                        </div>
+                    </div>`)
                 }
             }
         ] : [];
@@ -495,7 +530,7 @@ if ($('table').length > 0) {
             for (var i = 0; i < 7; i++) {
                 $(`table thead tr:eq(0) th`)[i].innerHTML = names[i];
             }
-        }else if (Wlhs == "OutlaysAdmin") {
+        } else if (Wlhs == "OutlaysAdmin") {
             var names = ['#', 'Status', 'Cliente', 'Projeto', 'Funcionário']
 
             for (var i = 0; i < 5; i++) {
@@ -536,13 +571,12 @@ if ($('table').length > 0) {
 
     $('input[type="search"]').on('keyup', function () {
         Wlhs == 'Hours' || Wlhs == "ModeAdmin" ? SumTotalHours() : '';
+        Wlhs == "ModeAdmin" ? $('table tfoot tr td:eq(11)').text($('#TotalOfSumHours').val()) : '';
     });
 
     $('table thead tr:eq(0)').css({ "background-color": "#EF8223", "color": "#fff" })
     $('table thead tr:eq(0) th').css({ "border-color": "#010101", "width": "60px" })
-
 }
-
 $('.imgLogo').attr('src', $('#ImgLogo').val())
 
 /*
