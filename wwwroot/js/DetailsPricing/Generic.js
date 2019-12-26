@@ -12,6 +12,12 @@
     $('#DetailsPricing_AgeYears').val().length == 0 ? $('#DetailsPricing_AgeYears').val(0) : '';
 
     var form = $('#DetailsPricingsForm');
+
+    if ($('#DetailsPricing_Id').val() ==  "") {
+        $('#DetailsPricingsForm').prop('action', '/DetailsPricings/Create');
+        $('#DetailsPricing_Id').remove();
+    }
+
     $('#toast-container-saved').toggle();
     $('.modalSpinner').modal('show');
     form.submit();
