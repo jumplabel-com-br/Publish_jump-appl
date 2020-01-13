@@ -13,7 +13,7 @@
 
     var form = $('#DetailsPricingsForm');
 
-    if ($('#DetailsPricing_Id').val() ==  "") {
+    if ($('#DetailsPricing_Id').val() == "") {
         $('#DetailsPricingsForm').prop('action', '/DetailsPricings/CreateAsync');
         $('#DetailsPricing_Id').remove();
     }
@@ -70,7 +70,7 @@ function verificationsOnSubmitDetails() {
     }
     */
 
-    if ($('#DetailsPricing_AgeYears').val().length == 0 && ($('#DetailsPricing_TypeContract').val() == 1 || $('#DetailsPricing_TypeContract').val() == 3)) {
+    if ($('#DetailsPricing_DateBirth').val().length == 0 && ($('#DetailsPricing_TypeContract').val() == 1 || $('#DetailsPricing_TypeContract').val() == 3)) {
         $('#ageYears').show();
         return false;
     }
@@ -118,13 +118,42 @@ function addDetailsPricings() {
 
 
     $('#DetailsPricing_Id').remove();
-    let data = $('#DetailsPricingsForm').serialize().replace(/R%24%20/g,'')
+    //let data = $('#DetailsPricingsForm').serialize().replace(/R%24%20/g, '')
+    let TypeContract = $('#DetailsPricing_TypeContract').val();
+    let SpecialtyName = $('#DetailsPricing_SpecialtyName').val();
+    let HoursMonth = $('#DetailsPricing_HoursMonth').val();
+    let HourConsultant = $('#DetailsPricing_HourConsultant').val().replace('R$ ', '').replace(/[.]/g, '');
+    let HourSale = $('#DetailsPricing_HourSale').val().replace('R$ ', '').replace(/[.]/g, '');
+    let ValueCLTType = $('#DetailsPricing_ValueCLTType').val().replace('R$ ', '').replace(/[.]/g, '');
+    let VT = $('#DetailsPricing_VT').val().replace('R$ ', '').replace(/[.]/g, '');
+    let Cust = $('#DetailsPricing_Cust').val().replace('R$ ', '').replace(/[.]/g, '');
+    let DateBirth = $('#DetailsPricing_DateBirth').val();
+    let AgeYears = $('#DetailsPricing_AgeYears').val();
+    let Pricing_Id = $('#DetailsPricing_Pricing_Id').val();
+    //let Id = $('#DetailsPricing_Id').val();
+    let __RequestVerificationToken = $('#DetailsPricingsForm  input[name="__RequestVerificationToken"]').val();
+
+    let infos = {
+        TypeContract,
+        SpecialtyName,
+        HoursMonth,
+        HourConsultant,
+        HourSale,
+        ValueCLTType,
+        VT,
+        Cust,
+        DateBirth,
+        AgeYears,
+        Pricing_Id,
+        //Id,
+        __RequestVerificationToken
+    }
 
     $.ajax({
         url: '/DetailsPricings/CreateAsync',
         type: 'POST',
         dataType: 'html',
-        data: data,
+        data: infos,
         beforeSend: function () {
             $('.modalSpinner').modal('show');
         },
@@ -139,7 +168,10 @@ function addDetailsPricings() {
             console.log("error");
         })
         .always(function () {
-            setTimeout(function () { $('.modalSpinner').modal('hide'); }, 1000)
+            setTimeout(function () {
+                $('.modalSpinner').modal('hide');
+                returnDetailsPricings();
+            }, 1000)
         });
 }
 
@@ -155,7 +187,6 @@ function returnDetailsPricings() {
     })
         .done(function (data) {
             console.log("success");
-            console.log('data: ', data)
             data.length > 0 ? $('.grid-pricings').html(gridDetailsPricings(data)) : $('.grid-pricings').html('');
         })
         .fail(function () {
@@ -223,34 +254,34 @@ function gridDetailsPricings(model) {
                 </thead>
                 <tbody>
                     ${model.map(obj => {
-                        return `
+        return `
                       <tr>
                         <td>
-                            ${typeContract(obj.typeContract)}
+                            ${typeContract(obj.typeContract) == 0 ? '' : typeContract(obj.typeContract)}
                         </td>
                         <td>
                             ${obj.specialtyName}
                         </td>
                         <td>
-                            ${obj.hoursMonth}
+                            ${obj.hoursMonth == 0 ? '' : obj.hoursMonth}
                         </td>
                         <td>
-                            ${maskSpanMoney(obj.hourConsultant)}
+                            ${maskSpanMoney(obj.hourConsultant) == 0 ? '' : maskSpanMoney(obj.hourConsultant)}
                         </td>
                         <td>
-                            ${maskSpanMoney(obj.hourSale)}
+                            ${maskSpanMoney(obj.hourSale) == 0 ? '' : maskSpanMoney(obj.hourSale)}
                         </td>
                         <td>
-                            ${maskSpanMoney(obj.valueCLTType)}
+                            ${maskSpanMoney(obj.valueCLTType) == 0 ? '' : maskSpanMoney(obj.valueCLTType)}
                         </td>
                         <td>
-                            ${maskSpanMoney(obj.vt)}
+                            ${maskSpanMoney(obj.vt) == 0 ? '' : maskSpanMoney(obj.vt)}
                         </td>
                         <td>
-                            ${maskSpanMoney(obj.cust)}
+                            ${maskSpanMoney(obj.cust) == 0 ? '' : maskSpanMoney(obj.cust)}
                         </td>
                         <td>
-                            ${obj.ageYears}
+                            ${obj.ageYears == 0 ? '' : obj.ageYears}
                         </td>
                         ${$('#Pricing_Id').val() == undefined ? `
                         <td>
@@ -272,7 +303,7 @@ function deleteDetailsPricings(id) {
             type: 'GET',
             dataType: 'html',
             data: { id },
-            beforeSend: function() {
+            beforeSend: function () {
                 $('.modalSpinner').modal('show');
             }
         })
@@ -283,13 +314,17 @@ function deleteDetailsPricings(id) {
             })
             .fail(function () {
                 console.log("error");
-                setTimeout(function () { $('.modalSpinner').modal('hide'); }, 1000)
+                setTimeout(function () {
+                    $('.modalSpinner').modal('hide');
+                    returnDetailsPricings();
+                }, 1000)
             });
 
     }
 }
 
 function editDetailsPricings(id) {
+    $('.DetailsPricing_Id').remove();
     $('.DetailsPricing_Id').remove();
 
     $.ajax({
@@ -304,20 +339,20 @@ function editDetailsPricings(id) {
         .done(function (data) {
             console.log("success");
 
-            console.log('data: ', data)
+            let infos = data;
+            dateBirth = infos.dateBirth.split('T')[0] == '1900-01-01'  ? '' : infos.dateBirth.split('T')[0] ;
 
-                let infos = data;
-
-                $('#DetailsPricing_TypeContract').val(infos.typeContract)
-                $('#DetailsPricing_Pricing_Id').val(infos.pricing_Id)
-                $('#DetailsPricing_SpecialtyName').val(infos.specialtyName)
-                $('#DetailsPricing_HoursMonth').val(infos.hoursMonth)
-                $('#DetailsPricing_HourConsultant').val(infos.hourConsultant)
-                $('#DetailsPricing_HourSale').val(infos.hourSale)
-                $('#DetailsPricing_ValueCLTType').val(infos.valueCLTType)
-                $('#DetailsPricing_VT').val(infos.vt)
-                $('#DetailsPricing_Cust').val(infos.cust)
-                $('#DetailsPricing_AgeYears').val(infos.ageYears)
+            $('#DetailsPricing_TypeContract').val(infos.typeContract)
+            $('#DetailsPricing_Pricing_Id').val(infos.pricing_Id)
+            $('#DetailsPricing_SpecialtyName').val(infos.specialtyName)
+            $('#DetailsPricing_HoursMonth').val(infos.hoursMonth)
+            $('#DetailsPricing_HourConsultant').val(infos.hourConsultant)
+            $('#DetailsPricing_HourSale').val(infos.hourSale)
+            $('#DetailsPricing_ValueCLTType').val(infos.valueCLTType)
+            $('#DetailsPricing_VT').val(infos.vt)
+            $('#DetailsPricing_Cust').val(infos.cust)
+            $('#DetailsPricing_DateBirth').val(dateBirth);
+            $('#DetailsPricing_AgeYears').val(infos.ageYears)
 
             maskSpanMoney(infos.hourConsultant, 'DetailsPricing_HourConsultant')
             maskSpanMoney(infos.hourSale, 'DetailsPricing_HourSale')
@@ -335,6 +370,7 @@ function editDetailsPricings(id) {
             setTimeout(function () {
                 $('.modalSpinner').modal('hide');
                 maskMoney();
+                replace0ToEmpty();
             }, 1000)
         });
 }
@@ -363,17 +399,46 @@ function saveDetailsPricings() {
         $('#DetailsPricing_Cust').val(0);
     }
 
-    if ($('#DetailsPricing_AgeYears').val() == '') {
+    if ($('#DetailsPricing_AgeYears').val() == '' || $('#DetailsPricing_TypeContract').val()  == 2) {
         $('#DetailsPricing_AgeYears').val(0);
     }
 
-    let data = $('#DetailsPricingsForm').serialize().replace(/R%24%20/g,'')
+    //let data = $('#DetailsPricingsForm').serialize()//.replace(/R%24%20/g, '')
+    let TypeContract = $('#DetailsPricing_TypeContract').val();
+    let SpecialtyName = $('#DetailsPricing_SpecialtyName').val();
+    let HoursMonth = $('#DetailsPricing_HoursMonth').val();
+    let HourConsultant = $('#DetailsPricing_HourConsultant').val().replace('R$ ', '').replace(/[.]/g, '');
+    let HourSale = $('#DetailsPricing_HourSale').val().replace('R$ ', '').replace(/[.]/g, '');
+    let ValueCLTType = $('#DetailsPricing_ValueCLTType').val().replace('R$ ', '').replace(/[.]/g, '');
+    let VT = $('#DetailsPricing_VT').val().replace('R$ ', '').replace(/[.]/g, '');
+    let Cust = $('#DetailsPricing_Cust').val().replace('R$ ', '').replace(/[.]/g, '');
+    let DateBirth = $('#DetailsPricing_DateBirth').val();
+    let AgeYears = $('#DetailsPricing_AgeYears').val();
+    let Pricing_Id = $('#DetailsPricing_Pricing_Id').val();
+    let Id = $('#DetailsPricing_Id').val();
+    let __RequestVerificationToken = $('#DetailsPricingsForm  input[name="__RequestVerificationToken"]').val();
+
+    let infos = {
+        TypeContract,
+        SpecialtyName,
+        HoursMonth,
+        HourConsultant,
+        HourSale,
+        ValueCLTType,
+        VT,
+        Cust,
+        DateBirth,
+        AgeYears,
+        Pricing_Id,
+        Id,
+        __RequestVerificationToken
+    }
 
     $.ajax({
         url: '/DetailsPricings/EditAsync',
         type: 'POST',
         dataType: 'html',
-        data: data,
+        data: infos,
         beforeSend: function () {
             $('.modalSpinner').modal('show');
         },
@@ -396,6 +461,7 @@ function saveDetailsPricings() {
             setTimeout(function () {
                 $('.modalSpinner').modal('hide');
                 maskMoney();
+                returnDetailsPricings();
             }, 1000)
         });
 }
@@ -403,7 +469,7 @@ function saveDetailsPricings() {
 function ageYears() {
     var inputYear = $('.clssAgeYears').val().split('-')
 
-    var years = new Date() - new Date(inputYear[1] + '-' + inputYear[2] + '-' +inputYear[0]);
+    var years = new Date() - new Date(inputYear[1] + '-' + inputYear[2] + '-' + inputYear[0]);
 
     years = years / 1000; //transformando millisegundos em segundos
     years = years / 60; // transformando segundos em minutos
@@ -413,6 +479,12 @@ function ageYears() {
     years = parseInt(years);
 
     $('#DetailsPricing_AgeYears').val(years);
+}
+
+function replace0ToEmpty() {
+    document.querySelectorAll('form input, form select').forEach((obj, item) =>
+        $(obj).val() == 0 ? $(obj).val('') : ''
+    )
 }
 
 $('.money').mask('000.000.000.000.000,00', { reverse: true });
