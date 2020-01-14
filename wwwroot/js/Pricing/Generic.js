@@ -34,7 +34,7 @@ function FormSubmit(url, modal) {
 
 function verificationsOnSubmit() {
 
-    $('#pricing_typePricing').hide();
+    $('#Pricing_TypePricing').hide();
     $('#pricing_client_Id').hide();
     $('#pricing_allocation').hide();
     $('#pricing_accountExecutive').hide();
@@ -47,7 +47,7 @@ function verificationsOnSubmit() {
     $('#pricing_risk').hide();
 
     if ($('#Pricing_TypePricing').val().length == 0) {
-        $('#pricing_typePricing').show();
+        $('#Pricing_TypePricing').show();
         return false;
     }
 
