@@ -26,7 +26,18 @@ function notCheckedAll() {
 
 function confirmUpdateStatus() {
 
-    if ($('#statusUpdate').val().length <= 0) {
+    if ($('#statusUpdate').val() == "") {
+        $('.toast-container').show();
+        $('.toast-message').hide();
+        $('.message-error-delete').html('Operação inválida, selecione um status');
+        $('.toast-message-cancel').show();
+        $('.btn-btn-cancel').css({ marginLeft: "70%" });
+        $('.btn-submit-confirm').hide();
+        $('#toast-container').toggle();
+        return false;
+    }
+
+    if ($('#UpdateStatus #status').val() == "") {
         $('.toast-container').show();
         $('.toast-message').hide();
         $('.message-error-delete').html('Operação inválida, selecione um status');
