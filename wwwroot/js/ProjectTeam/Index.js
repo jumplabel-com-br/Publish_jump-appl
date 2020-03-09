@@ -23,8 +23,7 @@
     AtualizaComboAno();
 });
 
-setTimeout(function () { Proejcts() },1000)
-Projects();
+setTimeout(function () { Projects(); },1000)
 
 $('#clients').val($('#Clients').val())
 $('#projects').val($('#Projects').val())
