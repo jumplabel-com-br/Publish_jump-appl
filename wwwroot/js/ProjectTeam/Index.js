@@ -23,6 +23,8 @@
     AtualizaComboAno();
 });
 
+Projects();
+
 $('#clients').val($('#Clients').val())
 $('#projects').val($('#Projects').val())
 $('#employees').val($('#Employees').val())

@@ -750,8 +750,6 @@ function Projects() {
     arr = arrProjectTeam.concat(arrProjects)
     arr = arr.filter(obj => obj.client_Id == $('#clients').val());
     $('#projects').html(SelectProject(arr))
-
-    $('#projects').val() != undefined && $('#projects') != '' ? $('#projects').val($('#Projects').val()) : '';
 }
 
 function Employees() {
