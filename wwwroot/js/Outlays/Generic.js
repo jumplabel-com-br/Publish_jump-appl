@@ -156,7 +156,7 @@ function OutlaysSubmit() {
         return false;
     }
 
-    if ($('#Document').val().length == 0 && $('#Outlays_File').val() == '') {
+    if ($('#Document').val().length == 0 && wlhs[4] != 'Edit') {
         $('#outlays_file').show();
         $('#Document').focus();
         return false;
