@@ -285,7 +285,7 @@ function searchProjectsPerEmployee() {
         type: 'GET',
         async: false,
         dataType: 'json',
-        data: { defaultVerification : "0"},
+        data: {},
     })
         .done(function (data) {
             console.log(data);
