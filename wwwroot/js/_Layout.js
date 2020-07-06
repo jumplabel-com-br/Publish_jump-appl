@@ -358,7 +358,7 @@ if ($('table').length > 0) {
 
     columnsModeAdmin = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     columnsOutlaysAdmin = [2, 3, 4, 5, 6, 7, 8];
-    columnsReportsModeAdmin = [2, 3, 4, 5, 6, 7, 8, 9, 10];
+    columnsReportsModeAdmin = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
     columnsReportsOutlaysAdmin = [1, 2, 3, 4, 5, 6, 7];
 
     columnDefsModeAdmin = [
