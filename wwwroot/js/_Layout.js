@@ -654,7 +654,7 @@ if ($('table').length > 0) {
     $('input[type="search"]').on('keyup', function () {
         Wlhs == 'Hours' || Wlhs == "ModeAdmin" || Wlhs == "Reports" ? SumTotalHours() : '';
         Wlhs == "ModeAdmin" ? $('table tfoot tr td:eq(12)').text($('#TotalOfSumHours').val()) : '';
-        Wlhs == "Reports" ? $('table tfoot tr td:eq(10)').text($('#TotalOfSumHours').val()) : '';
+        Wlhs == "Reports" ? $('table tfoot tr td:eq(11)').text($('#TotalOfSumHours').val()) : '';
     });
 }
 
