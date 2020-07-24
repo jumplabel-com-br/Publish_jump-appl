@@ -357,3 +357,4 @@ $('#description').val($('#Description').val());
 $('#clients').val($('#Clients').val());
 $('#projects').val($('#Projects').val());
 $('#employees').val($('#Employees').val());
+$('#obsDay').val() != undefined ? $('#obsDay').val($('#obsDays').val()) : '';

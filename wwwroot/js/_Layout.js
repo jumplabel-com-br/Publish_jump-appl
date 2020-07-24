@@ -314,6 +314,7 @@ function nameClass(id) {
     }
 }*/
 
+
 if ($('table').length > 0) {
     var lastWlhs = wlhs[wlhs.length - 1].split('?')[0].replace('#','');
     var Wlhs = wlhs[3].split('?')[0].replace('#', '');
@@ -358,7 +359,7 @@ if ($('table').length > 0) {
 
     columnsModeAdmin = [3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
     columnsOutlaysAdmin = [2, 3, 4, 5, 6, 7, 8];
-    columnsReportsModeAdmin = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+    columnsReportsModeAdmin = $('#obsDay').val() != undefined && $('#obsDay').val() == "1" ? [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
     columnsReportsOutlaysAdmin = [1, 2, 3, 4, 5, 6, 7];
 
     columnDefsModeAdmin = [
