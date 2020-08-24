@@ -32,13 +32,17 @@ $(document).ready(function () {
 $('.btn-edit').on('click', function () {
     $('.btn-submit-sim-modal').on('click', function () {
         Update('Hours/EditAsync', $('#HoursForm'))
-    });  
+    });
 });
 
 $('.btn-copy').on('click', function () {
     $('.btn-submit-sim-modal').on('click', function () {
         Create('Hours/CreateAsync', $('#HoursForm'))
-    }); 
+    });
 });
 
+function Attachment() {
+    $('#hrefAttachment').attr({ href: 'Files/Hour/Attachment' + $("#Hour_Attachment").val() });
+    $('#hrefAttachment').html($("#Hour_Attachment").val());
+}
 //setTimeout(function () { $('#Hour_Description').val() == 3 ? $('.divDocument').show() : $('.divDocument').hide() }, 3000)
