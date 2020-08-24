@@ -502,6 +502,12 @@ function HourSubmit() {
 
     $('#Hour_File').val('Sem Documento');
 
+    if (sizeFile($('#Attachment').prop("files")[0].size).substr(sizeFile($('#Attachment').prop("files")[0].size).length - 2).toUpperCase() != "MB" && sizeFile($('#Attachment').prop("files")[0].size).substr(sizeFile($('#Attachment').prop("files")[0].size).length - 2).toUpperCase() != "KB" && sizeFile($('#Attachment').prop("files")[0].size).substr(sizeFile($('#Attachment').prop("files")[0].size).length - 4).replace(/ kB| mB| MB| KB/g, '') > 2)
+    {
+        alert("O tamanho do anexo excede 2 MB");
+        return false;
+    }
+
     if ($('#Document').val().length > 0) {
         let document = $('#Document').prop("files")[0]
 
