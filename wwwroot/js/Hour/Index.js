@@ -18,10 +18,6 @@ $(document).ready(function () {
         });
     });
 
-    function Attachment() {
-        $('#hrefAttachment').attr({ href: 'Files/Hour/Attachment' + $("#Hour_Attachment").val() });
-        $('#hrefAttachment').html($("#Hour_Attachment").val());
-    }
 
 
     function AtualizaComboAno() {

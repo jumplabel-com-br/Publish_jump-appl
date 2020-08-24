@@ -41,8 +41,4 @@ $('.btn-copy').on('click', function () {
     });
 });
 
-function Attachment() {
-    $('#hrefAttachment').attr({ href: 'Files/Hour/Attachment' + $("#Hour_Attachment").val() });
-    $('#hrefAttachment').html($("#Hour_Attachment").val());
-}
 //setTimeout(function () { $('#Hour_Description').val() == 3 ? $('.divDocument').show() : $('.divDocument').hide() }, 3000)
