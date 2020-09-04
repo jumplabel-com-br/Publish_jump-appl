@@ -451,6 +451,8 @@ if ($('table').length > 0) {
             },
             {
                 extend: 'pdfHtml5',
+                pageSize: 'LEGAL',
+                orientation: 'landscape',
                 footer: true,
                 text: '<i class="fa fa-file-pdf-o"></i>',
                 title: ' ',
