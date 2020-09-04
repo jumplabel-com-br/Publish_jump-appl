@@ -472,7 +472,7 @@ if ($('table').length > 0) {
                         }) : '';
 
                     doc.content.splice(0, 0, {
-                        margin: [0, 0, 170, 0],
+                        margin: [0, 0, 370, 0],
                         alignment: 'center',
                         width: 200,
                         heigth: 100,
